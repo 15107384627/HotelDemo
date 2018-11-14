@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tsl.mapper.GestroomMapper">
+
+	
+	<select id="findAllGestroom" parameterType="gestroomPo" resultType="gestroomPo">
+  		select * from t_gestroom where 1=1
+  		<if test="gr_num!='' and gr_num!=null">
+  			and gr_num like concat('%',#{gr_num},'%')
+  		</if>
+  	</select>
+  	
+  	<select id="findGestroomIsRepeat" parameterType="gestroomPo" resultType="gestroomPo">
+  		select * from t_gestroom where 1=1
+  		<if test="gr_num!='' and gr_num!=null">
+  			and gr_num=#{gr_num}
+  		</if>
+  	</select>
+  	
+  	<delete id="deleteOneGestroom" parameterType="Integer">
+  		delete from t_gestroom where id = #{id}
+  	</delete>
+  
+  	<insert id="addOneGestroom" parameterType="gestroomPo">
+  		insert into t_gestroom(gr_num,gr_name,gr_des,gr_img,gr_price) values(#{gr_num},#{gr_name},#{gr_des},#{gr_img},#{gr_price})
+  	</insert>
+  
+</mapper>
+
+

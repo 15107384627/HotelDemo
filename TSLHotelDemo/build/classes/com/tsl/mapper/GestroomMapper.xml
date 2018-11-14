@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tsl.mapper.GestroomMapper">
+
+	
+	<select id="findAllGestroom" parameterType="gestroomPo" resultType="gestroomPo">
+  		select * from t_gestroom where 1=1
+  		<if test="gr_num!='' and gr_num!=null">
+  			and gr_num like concat('%',#{gr_num},'%')
+  		</if>
+  		<if test="gr_name=='group by gr_name'">
+  			group by gr_name
+  		</if>
+  	</select>
+  	
+  	<select id="findRoomNum" parameterType="gestroomPo" resultType="gestroomPo">
+  		select * from t_gestroom where gr_name=#{gr_name}
+  	</select>
+  	
+  	<select id="findRoomPrice" parameterType="gestroomPo" resultType="gestroomPo">
+  		select * from t_gestroom where gr_num=#{gr_num}
+  	</select>
+  	
+  	
+  	<select id="findGr_name" resultType="String">
+  		select gr_name from t_gestroom group by gr_name
+  	</select>
+  	
+  	<select id="findGestroomIsRepeat" parameterType="gestroomPo" resultType="gestroomPo">
+  		select * from t_gestroom where 1=1
+  		<if test="gr_num!='' and gr_num!=null">
+  			and gr_num=#{gr_num}
+  		</if>
+  	</select>
+  	
+  	<delete id="deleteOneGestroom" parameterType="Integer">
+  		delete from t_gestroom where id = #{id}
+  	</delete>
+  
+  	<insert id="addOneGestroom" parameterType="gestroomPo">
+  		insert into t_gestroom(gr_num,gr_name,gr_des,gr_img,gr_price) values(#{gr_num},#{gr_name},#{gr_des},#{gr_img},#{gr_price})
+  	</insert>
+  
+</mapper>
+
+

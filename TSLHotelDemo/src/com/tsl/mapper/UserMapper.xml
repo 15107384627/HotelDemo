@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tsl.mapper.UserMapper">
+
+	<select id="userLogin" parameterType="userPo" resultType="userPo">
+  		select * from t_user where u_name=#{u_name} and u_pwd=#{u_pwd}
+  	</select>
+
+  	<select id="findAllUser" parameterType="userPo" resultType="userPo">
+  		select * from t_user where 1=1
+  		<if test="u_name!='' and u_name!=null">
+  			and u_name like concat('%',#{u_name},'%')
+  		</if>
+  	</select>
+  	
+  	<select id="findUserIsRepeat" parameterType="userPo" resultType="userPo">
+  		select * from t_user where 1=1
+  		<if test="u_name!='' and u_name!=null">
+  			and u_name=#{u_name}
+  		</if>
+  	</select>
+  	
+  	<insert id="addOneUser" parameterType="userPo">
+  		insert into t_user(u_name,u_pwd,u_dec) values(#{u_name},#{u_pwd},#{u_dec})
+  	</insert>
+  	
+  	<delete id="deleteOneUser" parameterType="Integer">
+  		delete from t_user where id = #{id}
+  	</delete>
+  	
+  	<!-- 分页查询  -->
+  	<select id="findPageUser" parameterType="java.util.Map" resultType="userPo">
+  		select * from t_user where 1=1
+  		<if test="u_name!='' and u_name!=null">
+  			and u_name like concat('%',#{u_name},'%')
+  		</if>
+  		<if test="start!=null and rows!=null">
+  			limit #{start},#{rows}
+  		</if>
+  	</select>
+  	<!-- 查询user表的总数 -->
+  	<select id="getUserNum" parameterType="userPo" resultMap="userNum">
+  		select count(*) from t_user
+  	</select>
+  	<resultMap type="Integer" id="userNum"  > 
+  		<result column="count(*)" property="num"/>
+    </resultMap>
+  	
+</mapper>
+
+
